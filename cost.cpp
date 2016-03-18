@@ -36,9 +36,10 @@ int main()
 				cost = case3;
 
 			Queue.push(cost);
-			printf("case: %d %d %d\n",case1,case2,case3);
-			printf("now: %d\n",cost);
-			fflush(stdout);
+//			printf("case: %d %d %d\n",case1,case2,case3);
+//			printf("now: %d\n",cost);
 		}
+		printf("%d\n",cost);
+		fflush(stdout);
 	}
 }
