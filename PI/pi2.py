@@ -59,6 +59,7 @@ def getMinValue(subnumbers):
 
 
 def search(subnumbers,first):
+	global cache,size
 	# if finished
 	if first == size:
 		return 0
