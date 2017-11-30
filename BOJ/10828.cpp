@@ -1,8 +1,5 @@
 #include<stdio.h>
 #include<string.h>
-#include<iostream>
-
-using namespace std;
 
 int Stack[10000];
 int top = 1;
@@ -20,7 +17,7 @@ int main(){
 			printf("%d ",Stack[i]);
 		printf("\n");
 */
-		char order[5];
+		char order[6];
 		scanf("%s%*c",order);
 		if(strcmp(order,"push")==0){
 			int value;
