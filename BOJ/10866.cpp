@@ -3,13 +3,13 @@
 
 using namespace std;
 
-#define SIZE 10000
+#define SIZE 20002
 int main(){
 	int numOfcoms;
 	scanf("%d",&numOfcoms);
 	int deque[SIZE];
-	int first = SIZE-1;
-	int last = SIZE-1;
+	int first = SIZE/2;
+	int last = SIZE/2;
 	
 	while(numOfcoms--){
 		char command[11];
@@ -25,31 +25,26 @@ int main(){
 			int num;
 			scanf("%d",&num);
 
-			last = ++last%SIZE;
-			deque[last] = num;
+			deque[++last] = num;
 		}
 		else if(strcmp(command,"pop_front")== 0){
 			if(first == last)
 				printf("-1\n");
 			else{
-				first = ++first%SIZE;
-				printf("%d\n",deque[first]);
+				printf("%d\n",deque[++first]);
 			}
 		}
 		else if(strcmp(command,"pop_back")== 0){
 			if(first == last)
 				printf("-1\n");
 			else{
-				printf("%d\n",deque[last]);
-				last = (last-1+SIZE)%SIZE;
+				printf("%d\n",deque[last--]);
 			}
 		}
 		else if(strcmp(command,"size")== 0){
 			int size;
 			if(first <= last)
 				size = last-first;
-			else
-				size = last+SIZE-first;
 
 			printf("%d\n",size);
 		}
