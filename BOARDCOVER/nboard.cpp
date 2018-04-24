@@ -10,12 +10,12 @@ long long Cnt;
 vector<pair<pair<int,int>,pair<int,int> > > patch;
 
 
-void cover(int bx, int by){
+void cover(){
 	int x,y;
 	int flag = 1;
 	for(int i=0; i<H; i++){
 		for(int j=0; j<W; j++){
-			if(Board[i][j] == 0){// && bx*W+by <= i*W+j){
+			if(Board[i][j] == 0){
 				x = i;
 				y = j;
 				flag = 0;
@@ -39,7 +39,7 @@ void cover(int bx, int by){
 				(0<= tx2 && tx2 <H) && (0<= ty2 && ty2 <W) &&
 				(Board[tx1][ty1] == 0) && (Board[tx2][ty2] == 0)){
 				Board[x][y] = Board[tx1][ty1] = Board[tx2][ty2] = 1;
-				cover(x,y);
+				cover();
 				Board[x][y] = Board[tx1][ty1] = Board[tx2][ty2] = 0;
 			}
 		}
@@ -63,7 +63,6 @@ int main(){
 			for(int j=0; j<W; j++){
 				char ch;
 				cin>>ch;
-				//scanf("%c",&ch);
 				if(ch == '#')
 					Board[i][j] = 2;
 				else{
@@ -74,13 +73,8 @@ int main(){
 			cin.clear();
 		}
 		
-	/*	for(int i=0; i<H; i++){
-			for(int j=0; j<W; j++)
-			cout<<Board[i][j]<<" ";
-		cout<<endl;
-		}	*/
 		if(temp%3==0)
-			cover(0,0);
+			cover();
 		printf("%lld\n",Cnt);
 	}
 }
