@@ -4,30 +4,25 @@
 
 using namespace std;
 
-int Len;
-int A[LIMIT];
-int Max = 0;
-
-void Step(int nIdx, int cnt, int sum){
-  if(nIdx < Len){
-    sum += A[nIdx];
-    if(nIdx == Len-1)
-      Max = max(Max, sum);
-    else{
-      if(cnt < 2)
-        Step(nIdx+1, cnt+1,sum);
-      Step(nIdx+2, 1, sum);
-    }
-  }
-}
 
 int main(){
+  int Len;
   scanf("%d",&Len );
-  for(int i=0; i<Len; i++)
-    scanf("%d",&A[i] );
+  
+  int b0,b1,b2;
+  b0 = b2 = 0;
+  scanf("%d",&b1);
 
-  Step(0,1,0);
-  Step(1,1,0);
+  while(--Len){
+	int A;
+  	scanf("%d",&A);
+	int n0 = max(b1,b2);
+	int n1 = b0 + A;
+	int n2 = b1 + A;
 
-  printf("%d\n",Max );
+	b0 = n0;
+	b1 = n1;
+	b2 = n2;
+  }
+  printf("%d\n",max(b1,b2) );
 }
