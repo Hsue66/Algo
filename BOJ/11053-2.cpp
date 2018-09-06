@@ -1,22 +1,28 @@
-// lower_bound/upper_bound example
 #include <iostream>     // cout
 #include <algorithm>    // lower_bound, upper_bound, sort
 #include <vector>       // vector
+#define LIMIT 1001
 
 using namespace std;
 
+vector <int> ordered;
+vector <int>::iterator idx;
+int M[LIMIT];
+
 int main () {
-  int myints[] = {10,20,30,30,20,10,10,20};
-  vector<int> v(myints,myints+8);           // 10 20 30 30 20 10 10 20
+  int len;
+  scanf("%d",&len );
+  for(int i=0; i<len; i++){
+    int num;
+    scanf("%d",&num);
+    ordered.push_back(num);
+    sort(ordered.begin(), ordered.end());
+    M[i] = lower_bound(ordered.begin(), ordered.end(), num) - ordered.begin();
+  }
 
-  //sort (v.begin(), v.end());                // 10 10 10 20 20 20 30 30
-
-  vector<int>::iterator low,up;
-  low=lower_bound (v.begin(), v.end(), 20); //          ^
-  up= upper_bound (v.begin(), v.end(), 20); //                   ^
-
-  cout << "lower_bound at position " << (low- v.begin()) << '\n';
-  cout << "upper_bound at position " << (up - v.begin()) << '\n';
+  for(int i=0; i<len; i++)
+    cout<<M[i]<<" ";
+  cout<<endl;
 
   return 0;
 }
