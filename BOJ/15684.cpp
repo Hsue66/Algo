@@ -69,7 +69,7 @@ int main(){
 
 
   int New[31][10]={0};
-  copy(&MAP[0][0], &MAP[0][0]+H*(N-1), &New[0][0]);
+  copy(&MAP[0][0], &MAP[H][N-1], &New[0][0]);
 
   for(int i=0; i<H; i++){
     for(int j=0; j<N-1; j++)
