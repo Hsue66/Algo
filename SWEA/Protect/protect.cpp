@@ -1,22 +1,19 @@
 #include<iostream>
 #include<cstdio>
-#include<vector>
-#include<queue>
 
 using namespace std;
 
-int D,W,K;
-int MAP[13][20];
-int Min;
-queue<vector<pair<int,int> > > Queue;
+int D,W,K, Min;
+int MAP[13][20],FILM[13][20];
+int Change[13];
 
-bool scan(int map[13][20]){
+bool scan(){
   int flag =0;
   for(int j=0; j<W && flag == j; j++){
     int cnt0,cnt1;
     cnt0 = cnt1 = 0;
     for(int i=0; i<D; i++){
-      if(map[i][j] == 1){
+      if(MAP[i][j] == 1){
         cnt1++;
         cnt0 = 0;
       }else{
@@ -35,47 +32,30 @@ bool scan(int map[13][20]){
     return false;
 }
 
-void useD(){
-  int flag = 0;
-  int size = 0;
-  while(!Queue.empty() && flag == 0){
-    int map[13][20];
-    // for(int i=0; i<D; i++)
-    //   copy(MAP[i],MAP[i]+W,map[i]);
-
-    vector<pair<int,int> > changed = Queue.front();
-    size = changed.size();
-    Queue.pop();
-
-    // change map
-    int idx;
-    for(int i=0; i<size; i++){
-      idx = changed[i].first;
-//      cout<<idx<<" ";
-      int val = changed[i].second;
-      copy(MAP[idx],MAP[idx]+W,map[idx]);
-      fill_n(MAP[idx],W,val);
+void insert(int idx, int cnt){
+  if(cnt >= Min)
+    return;
+  if(idx == D){
+    for(int i=0; i<D; i++){
+      if(Change[i] == 2)
+        copy(FILM[i],FILM[i]+W,MAP[i]);
+      else if(Change[i] == 0)
+        fill_n(MAP[i],W,0);
+      else
+        fill_n(MAP[i],W,1);
     }
-    if(scan(MAP)){
-      flag = 1;
-      Min = size;
-//      cout<<"-----------"<<endl;
-      break;
-    }
-    else{
-      for(int i= idx+1; i<D; i++){
-        changed.push_back(make_pair(i,0));
-        Queue.push(changed);
-        changed.pop_back();
-        changed.push_back(make_pair(i,1));
-        Queue.push(changed);
-        changed.pop_back();
-      }
-    }
-    for(int i=0; i<size; i++){
-      idx = changed[i].first;
-      copy(map[idx],map[idx]+W,MAP[idx]);
-    }
+    if(scan())
+      Min = min(Min,cnt);
+  }else{
+    // no
+    Change[idx] = 2;
+    insert(idx+1,cnt);
+    // a
+    Change[idx] = 0;
+    insert(idx+1,cnt+1);
+    // b
+    Change[idx] = 1;
+    insert(idx+1,cnt+1);
   }
 }
 
@@ -86,25 +66,11 @@ int main(){
     scanf("%d%d%d",&D,&W,&K );
     for(int i=0; i<D; i++){
       for(int j=0; j<W; j++)
-        scanf("%d",&MAP[i][j] );
+        scanf("%d",&FILM[i][j] );
     }
 
     Min = W;
-    if(scan(MAP))
-      Min = 0;
-    else{
-      for(int i=0; i<D; i++){
-        vector<pair<int,int> > temp;
-        temp.push_back(make_pair(i,0));
-        Queue.push(temp);
-        temp.pop_back();
-        temp.push_back(make_pair(i,1));
-        Queue.push(temp);
-      }
-      useD();
-    }
-    while(!Queue.empty())
-      Queue.pop();
+    insert(0,0);
     printf("#%d %d\n",t,Min);
   }
 }
